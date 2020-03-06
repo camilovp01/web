@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { DasboardComponent } from './dasboard/dasboard.component';
 import { PagesComponent } from './pages.component';
@@ -23,6 +23,7 @@ import { HistoryComponent } from './domain/history/history.component';
     SharedModule,
     PagesRoutingModule,
     FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class PagesModule { }

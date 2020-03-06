@@ -1,4 +1,4 @@
-export class SslInfo {
+export class SslInfoModel {
 
     constructor(
         public address: string,

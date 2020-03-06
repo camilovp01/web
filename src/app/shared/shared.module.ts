@@ -4,17 +4,20 @@ import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { RouterModule } from '@angular/router';
+import { SpinnerComponent } from './spinner/spinner/spinner.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     SidebarComponent,
-    BreadcrumbsComponent
+    BreadcrumbsComponent,
+    SpinnerComponent
   ],
   exports: [
     HeaderComponent,
     SidebarComponent,
-    BreadcrumbsComponent
+    BreadcrumbsComponent,
+    SpinnerComponent
   ],
   imports: [
     CommonModule,

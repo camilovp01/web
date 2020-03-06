@@ -1,3 +1,124 @@
-<p>
-  search works!
-</p>
+<div class="row animated fadeIn">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title" align="center">Ingresa el nombre del dominio</h4>
+        <div class="row">
+          <div class="col-sm-12 col-xs-12">
+
+            <form [formGroup]="search" align="center" (ngSubmit)="searchDomain(true)">
+              <div class="form-group">
+                <input formControlName="text" type="text" class="form-control" placeholder="dominio.com" required>
+              </div>
+
+              <div class="row" *ngIf="(!search.pristine && search.invalid) || (is_submit && search.invalid)">
+                <div class="col-12" align="center">
+                  <div class="col-6 alert alert-info">
+                    Mínimo 3 caracteres para iniciar busqueda
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">
+                <i class="fa fa-search"></i>
+                Buscar
+              </button>
+            </form>
+
+            <div *ngIf="showSpinner">
+              <app-spinner></app-spinner>
+            </div>
+
+            <div class="row" *ngIf="server">
+              <div class="col-4">
+                <div class="card">
+                  <div class="card card-body">
+
+                    <table class="table table-bordered table-striped ">
+                      <tbody>
+                        <tr>
+
+                          <th>Título</th>
+                          <td>{{server.title}}</td>
+
+                        </tr>
+
+                        <tr>
+
+                          <th>servers_changed</th>
+                          <td>{{server.servers_changed}}</td>
+
+                        </tr>
+
+                        <tr>
+
+                          <th>ssl_grade</th>
+                          <td>{{server.ssl_grade}}</td>
+
+                        </tr>
+
+                        <tr>
+
+                          <th>previous_ssl_grade</th>
+                          <td>{{server.previous_ssl_grade}}</td>
+
+                        </tr>
+
+                        <tr>
+
+                          <th>logo</th>
+                          <td>{{server.logo}}</td>
+
+                        </tr>
+
+                        <tr>
+
+                          <th>is_down</th>
+                          <td>{{server.is_down}}</td>
+
+                        </tr>
+
+                      </tbody>
+                    </table>
+                    <!--
+                    <p>{{server.servers_changed}}</p>
+                    <p>{{server.ssl_grade}}</p>
+                    <p>{{server.previous_ssl_grade}}</p>
+                    <p>{{server.logo}}</p>
+                    <p>{{server.is_down}}</p> -->
+                  </div>
+                </div>
+              </div>
+              <div class="col-8">
+                <div class="card">
+                  <div class="card card-body">
+                    <table class="table">
+                      <thead>
+
+                        <th>Dirección</th>
+                        <th>Grado SSL</th>
+                        <th>Pais</th>
+                        <th>Propietario</th>
+
+                      </thead>
+                      <tbody>
+                        <tr class="pointer" *ngFor="let servers of server.servers">
+                          <td>{{servers.address}}</td>
+                          <td>{{servers.ssl_grade}}</td>
+                          <td>{{servers.country}}</td>
+                          <td>{{servers.owner}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
