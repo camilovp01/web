@@ -19,18 +19,61 @@
                 </div>
               </div>
 
-              <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">
+              <button type="submit" class="btn btn-success waves-effect waves-light m-r-10" [disabled]="is_submit">
                 <i class="fa fa-search"></i>
                 Buscar
               </button>
+
+              <input formControlName="cache" id="checkbox1" type="checkbox">
+              <label for="checkbox1"> Búsqueda en chaché </label>
+
             </form>
 
             <div *ngIf="showSpinner">
               <app-spinner></app-spinner>
             </div>
 
+
             <div class="row" *ngIf="server">
-              <div class="col-4">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card card-body">
+                    <table class="table">
+                      <thead>
+
+                        <th>Dirección</th>
+                        <th>Grado SSL</th>
+                        <th>Pais</th>
+                        <th>Propietario</th>
+
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let servers of server.servers">
+                          <td>{{servers.address}}</td>
+                          <td>
+                            <app-progress-bar *ngIf="servers.progress < 100" percentage={{servers.progress}}>
+                            </app-progress-bar>
+
+                            <div *ngIf="servers.progress > 0 && servers.progress < 100">
+                              {{servers.progress}}%
+                            </div>
+
+                            <app-spinner *ngIf="!servers.progress"></app-spinner>
+                            {{servers.ssl_grade}}
+                          </td>
+                          <td>{{servers.country}}</td>
+                          <td>{{servers.owner}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row" *ngIf="server">
+              <div class="col-12">
                 <div class="card">
                   <div class="card card-body">
 
@@ -67,7 +110,10 @@
                         <tr>
 
                           <th>logo</th>
-                          <td>{{server.logo}}</td>
+                          <td>
+                            <img style="width: 30px; height: 30px; border-radius: 50%;" src="{{server.logo}}"
+                              alt="Logo" />
+                          </td>
 
                         </tr>
 
@@ -89,32 +135,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-8">
-                <div class="card">
-                  <div class="card card-body">
-                    <table class="table">
-                      <thead>
-
-                        <th>Dirección</th>
-                        <th>Grado SSL</th>
-                        <th>Pais</th>
-                        <th>Propietario</th>
-
-                      </thead>
-                      <tbody>
-                        <tr class="pointer" *ngFor="let servers of server.servers">
-                          <td>{{servers.address}}</td>
-                          <td>{{servers.ssl_grade}}</td>
-                          <td>{{servers.country}}</td>
-                          <td>{{servers.owner}}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
             </div>
-
           </div>
         </div>
 

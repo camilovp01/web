@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { ServerModel } from '../../../models/server.model'
-import { SslInfoModel } from '../../../models/ssl-info.model'
+import { InfoDomainService } from 'src/app/services/info-domain/info-domain.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-search',
@@ -14,27 +15,14 @@ export class SearchComponent implements OnInit {
   public is_submit: boolean = false;
   public showSpinner: boolean = false;
 
-  public sslInfo1: SslInfoModel = new SslInfoModel(
-    'adres purba',
-    'pais prueba',
-    'owner',
-    'ssl_grade'
-  )
-
-  public sslInfo2: SslInfoModel = new SslInfoModel(
-    'adres purba',
-    'pais prueba',
-    'owner',
-    'ssl_grade'
-  )
-
   public server: ServerModel;
 
-  constructor() { }
+  constructor(public _infoDomainService: InfoDomainService) { }
 
   ngOnInit() {
     this.search = new FormGroup({
-      text: new FormControl(null, [Validators.required, Validators.minLength(3)])
+      text: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+      cache: new FormControl(null)
     });
   }
 
@@ -43,13 +31,42 @@ export class SearchComponent implements OnInit {
     if (this.search.invalid) {
       return null;
     }
+    let domain = this.search.value.text;
+    let cache = this.search.value.cache;
+    let startNew = cache ? 'false' : 'true';
     this.showSpinner = true;
-    setTimeout(() => {
-      this.server = new ServerModel([this.sslInfo1, this.sslInfo2], true, 'ssgrade', 'previus grade', 'logo', 'title', false);
+    this._infoDomainService.infodomain$(domain, cache, startNew).subscribe((data) => {
+      this.server = data;
       this.showSpinner = false;
-    }, 3000);
+      if (this._infoDomainService.status === 'READY') {
+        this.is_submit = false;
+        return
+      }
+      if (this._infoDomainService.status) {
 
-    console.log(this.search);
+        const interval = setInterval(() => {
+          if (this._infoDomainService.status !== 'READY') {
+            this._infoDomainService.infodomain$(domain, cache, 'false').subscribe((data) => {
+              this.server = data;
+            });
+          } else {
+            this.is_submit = false;
+            clearInterval(interval);
+          }
+        }, 20000);
+
+      } else {
+        this.is_submit = false;
+        Swal.fire({
+          title: "Ups!",
+          text: "Ocurrió un error inesperado en el servicio, vuelve a intentarlo",
+          icon: "error",
+        });
+
+      }
+
+    });
+
   }
 
 }

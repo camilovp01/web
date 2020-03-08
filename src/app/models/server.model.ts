@@ -3,6 +3,7 @@ import { SslInfoModel } from './ssl-info.model';
 export class ServerModel {
 
   constructor(
+    public status?: string,
     public servers?: Array<SslInfoModel>,
     public servers_changed?: boolean,
     public ssl_grade?: string,
