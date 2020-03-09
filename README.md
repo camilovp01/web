@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Download Dependencies
 
-Run `npm i` in ther project root folder
+Run `npm i` in project root folder
 
 ## Development server
 
