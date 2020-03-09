@@ -35,6 +35,7 @@ export class SearchComponent implements OnInit {
     let cache = this.search.value.cache;
     let startNew = cache ? 'false' : 'true';
     this.showSpinner = true;
+    this._infoDomainService.saveHistory$(domain).subscribe();
     this._infoDomainService.infodomain$(domain, cache, startNew).subscribe((data) => {
       this.server = data;
       this.showSpinner = false;
