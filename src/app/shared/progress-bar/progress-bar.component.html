@@ -1,0 +1,13 @@
+<div class="row animated fadeIn" title="{{percentage}}%">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+            [attr.ariaValuenow]="percentage" aria-valuemin="0" aria-valuemax="100" [style.width]="percentage + '%'">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

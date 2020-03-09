@@ -1,9 +1,10 @@
-import { SslInfo } from './ssl-info.model';
+import { SslInfoModel } from './ssl-info.model';
 
-export class Server {
+export class ServerModel {
 
   constructor(
-    public servers?: Array<SslInfo>,
+    public status?: string,
+    public servers?: Array<SslInfoModel>,
     public servers_changed?: boolean,
     public ssl_grade?: string,
     public previous_ssl_grade?: string,
